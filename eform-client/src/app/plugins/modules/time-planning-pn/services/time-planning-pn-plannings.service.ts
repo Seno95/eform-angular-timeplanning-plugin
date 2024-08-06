@@ -10,6 +10,7 @@ import {
   TimePlanningsUpdateModel,
   TimePlanningUpdateModel,
 } from '../models';
+import { TimeClockInModel } from '../models/clockin/time-clockin.model';
 
 export let TimePlanningPnPlanningsMethods = {
   Plannings: 'api/time-planning-pn/plannings',
@@ -64,7 +65,15 @@ export class TimePlanningPnPlanningsService {
     return this.apiBaseService.get(TimePlanningPnPlanningsMethods.IndexFlex);
   }
 
+  getClockIn(): Observable<OperationDataResult<TimeClockInModel[]>> {
+    return this.apiBaseService.get(TimePlanningPnPlanningsMethods.IndexClockIn); 
+  }
+
   updateFlexes(model: TimeFlexesUpdateModel[]): Observable<OperationResult> {
     return this.apiBaseService.put(TimePlanningPnPlanningsMethods.Flex, model);
   }
+
+  updateClockIn(model: TimeClockInUpdateModel[]): Observable<OperationResult> {
+    return this.apiBaseService.put(TimePlanningPnPlanningsMethods.ClockIn, model);
+}
 }

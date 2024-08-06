@@ -2,7 +2,7 @@
   <button
     mat-icon-button
     id="resetBtn"
-    (click)="resetFlexPlanning()"
+    (click)="resetClockInPlanning()"
     color="accent"
     matTooltip="{{ 'Reset' | translate }}"
   >
@@ -10,13 +10,13 @@
   </button>
   <button
     mat-raised-button
-    id="flexPlanningSaveBtn"
-    (click)="saveFlexPlanning()"
+    id="ClockInnPlanningSaveBtn"
+    (click)="saveClockInPlanning()"
     color="accent"
   >{{ 'Save' | translate }}</button>
 </eform-new-subheader>
 
-<app-time-flexes-table
-  [flexPlannings]="timePlannings"
-  (flexPlanningChanged)="onUpdateFlexPlanning($event)"
-></app-time-flexes-table>
+<app-time-ClockIn-table
+  [ClockInPlannings]="timePlannings"
+  (ClockInPlanningChanged)="onUpdateClockInPlanning($event)"
+></app-time-ClockIn-table>

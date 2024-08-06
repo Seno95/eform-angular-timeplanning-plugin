@@ -5,35 +5,35 @@ import {
   OnInit,
 } from '@angular/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { TimeFlexesModel } from '../../../../../models';
+import { TimeClockInModel } from '../../../../../models';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-clockin-comment-office-update-modal',
-  templateUrl: './clockin-comment-office-update-modal.component.html',
-  styleUrls: ['./clockin-comment-office-update-modal.component.scss'],
+  selector: 'app-ClockIn-comment-office-update-modal',
+  templateUrl: './ClockIn-comment-office-update-modal.component.html',
+  styleUrls: ['./ClockIn-comment-office-update-modal.component.scss'],
 })
-export class ClockinCommentOfficeUpdateModalComponent implements OnInit, OnDestroy {
-  timeFlexes: TimeFlexesModel = new TimeFlexesModel();
+export class ClockInCommentOfficeUpdateModalComponent implements OnInit, OnDestroy {
+  timeClockIn: TimeClockInModel = new TimeClockInModel();
 
   constructor(
-    public dialogRef: MatDialogRef<ClockinCommentOfficeUpdateModalComponent>,
-    @Inject(MAT_DIALOG_DATA) timeFlexes: TimeFlexesModel,
+    public dialogRef: MatDialogRef<ClockInCommentOfficeUpdateModalComponent>,
+    @Inject(MAT_DIALOG_DATA) timeClockIn: TimeClockInModel,
   ) {
-    this.timeFlexes = { ...timeFlexes };
+    this.timeClockIn = { ...timeClockIn };
   }
 
   ngOnInit() {
   }
 
-  onUpdateFlexPlanning() {
+  onUpdateClockInPlanning() {
     this.hide(true);
   }
 
   hide(result = false) {
-    this.dialogRef.close({ result: result, model: { ...this.timeFlexes } });
-    this.timeFlexes = new TimeFlexesModel();
+    this.dialogRef.close({ result: result, model: { ...this.timeClockIn } });
+    this.timeClockIn = new TimeClockInModel();
   }
 
   ngOnDestroy(): void {

@@ -7,7 +7,7 @@
       <mat-label>{{ 'Comment office' | translate }}</mat-label>
       <textarea
         matInput
-        [(ngModel)]="timeFlexes.commentOffice"
+        [(ngModel)]="timeClockIn.commentOffice"
         type="text"
         id="commentOfficeInput"
         name="commentOfficeInput"
@@ -19,15 +19,15 @@
   <button
     mat-raised-button
     color="accent"
-    (click)="onUpdateFlexPlanning()"
-    id="flexesCommentOfficeEditSaveBtn"
+    (click)="onUpdateClockInPlanning()"
+    id="ClockInCommentOfficeEditSaveBtn"
   >
     {{'OK' | translate}}
   </button>
   <button
     mat-raised-button
     (click)="hide()"
-    id="flexesCommentOfficeEditSaveCancelBtn"
+    id="ClockInCommentOfficeEditSaveCancelBtn"
   >
     {{'Cancel' | translate}}
   </button>

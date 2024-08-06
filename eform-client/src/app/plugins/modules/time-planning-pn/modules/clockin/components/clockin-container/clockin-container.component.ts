@@ -3,23 +3,24 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
 import { SiteDto } from 'src/app/common/models';
 import {
-  TimeFlexesModel,
-  TimePlanningsRequestModel,
-  TimeFlexesUpdateModel,
-} from '../../../../models';
+  TimeClockInModel,
+  TimeClockInUpdateModel,
+} from '../../../../models/clockin';
+import {   TimePlanningsRequestModel } from '../../../../models/';
+
 import { TimePlanningPnPlanningsService } from '../../../../services';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-clockin-container', 
-  templateUrl: './clockin-container.component.html', 
-  styleUrls: ['./clockin-container.component.scss'], 
+  selector: 'app-ClockIn-container', 
+  templateUrl: './clockIn-container.component.html', 
+  styleUrls: ['./clockIn-container.component.scss'], 
 })
 export class ClockInContainerComponent implements OnInit, OnDestroy { 
   timePlanningsRequest: TimePlanningsRequestModel;
   availableSites: SiteDto[] = [];
-  timePlannings: TimeFlexesModel[] = [];
-  flexesForUpdate: TimeFlexesUpdateModel[] = [];
+  timePlannings: TimeClockInModel[] = [];
+  ClockInForUpdate: TimeClockInUpdateModel[] = [];
 
   getTimePlannings$: Subscription;
   updateTimePlanning$: Subscription;
@@ -27,12 +28,12 @@ export class ClockInContainerComponent implements OnInit, OnDestroy {
   constructor(private planningsService: TimePlanningPnPlanningsService) {}
 
   ngOnInit(): void {
-    this.getPlannings();
+    this.getClockIns();
   }
 
-  getPlannings() {
+  getClockIns() {
     this.getTimePlannings$ = this.planningsService
-      .getFlexes()
+      .getClockIn()
       .subscribe((data) => {
         if (data && data.success) {
           this.timePlannings = data.model;
@@ -40,29 +41,29 @@ export class ClockInContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  onUpdateFlexPlanning(model: TimeFlexesUpdateModel) {
-    const indexForUpdate = this.flexesForUpdate.findIndex(x => x.sdkSiteId === model.sdkSiteId);
-    this.timePlannings[this.timePlannings.findIndex(x => x.sdkSiteId === model.sdkSiteId)] = model as TimeFlexesModel;
+  onUpdateClockInPlanning(model: TimeClockInUpdateModel) {
+    const indexForUpdate = this.ClockInForUpdate.findIndex(x => x.sdkSiteId === model.sdkSiteId);
+    this.timePlannings[this.timePlannings.findIndex(x => x.sdkSiteId === model.sdkSiteId)] = model as TimeClockInModel;
     if (indexForUpdate === -1) {
-      this.flexesForUpdate.push(model);
+      this.ClockInForUpdate.push(model);
     } else {
-      this.flexesForUpdate[indexForUpdate] = model;
+      this.ClockInForUpdate[indexForUpdate] = model;
     }
   }
 
-  saveFlexPlanning() {
+  saveClockInPlanning() {
     this.updateTimePlanning$ = this.planningsService
-      .updateFlexes(this.flexesForUpdate)
+      .updateClockIn(this.ClockInForUpdate)
       .subscribe((data) => {
         if (data && data.success) {
-          this.getPlannings();
+          this.getClockIns();
         }
       });
   }
 
   resetFlexPlanning() {
-    this.flexesForUpdate = [];
-    this.getPlannings();
+    this.ClockInForUpdate = [];
+    this.getClockIns();
   }
 
   ngOnDestroy(): void {}

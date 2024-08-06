@@ -18,6 +18,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { dialogConfigHelper } from 'src/app/common/helpers';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { TimeClockInModel } from '../../../../models/clockin/time-clockin.model';
 
 @AutoUnsubscribe()
 @Component({
@@ -26,9 +27,9 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
   styleUrls: ['./clockin-table.component.scss'],
 })
 export class ClockinTableComponent implements OnInit, OnDestroy {
-  @Input() flexPlannings: TimeFlexesModel[] = [];
+  @Input() ClockInPlannings: TimeClockInModel[] = [];
   @Output()
-  flexPlanningChanged: EventEmitter<TimeFlexesModel> = new EventEmitter<TimeFlexesModel>();
+  ClockInPlanningChanged: EventEmitter<TimeClockInModel> = new EventEmitter<TimeClockInModel>();
   editCommentOfficeModal: ClockinCommentOfficeUpdateModalComponent;
 
   tableHeaders: MtxGridColumn[] = [
@@ -36,9 +37,9 @@ export class ClockinTableComponent implements OnInit, OnDestroy {
     {
       header: this.translateService.stream('Worker'),
       field: 'worker',
-      formatter: (row: TimeFlexesModel) => row.worker ? row.worker.name : '',
+      formatter: (row: TimeClockInModel) => row.worker ? row.worker.name : '',
     },
-    { header: this.translateService.stream('SumFlex'), field: 'sumFlex' },
+    { header: this.translateService.stream('SumClockIn'), field: 'sumClockIn' },
     { header: this.translateService.stream('Comment office'), field: 'commentOffice' },
   ];
 
@@ -53,25 +54,25 @@ export class ClockinTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  onFlexPlanningChanged(paidOutFlex: number, flexPlanning: TimeFlexesModel) {
-    this.flexPlanningChanged.emit({
-      ...flexPlanning,
-      paidOutFlex: paidOutFlex ?? flexPlanning.paidOutFlex,
+  onClockInPlanningChanged(paidOutClockIn: number, ClockInPlanning: TimeClockInModel) {
+    this.ClockInPlanningChanged.emit({
+      ...ClockInPlanning,
+      paidOutClockIn: paidOutClockIn ?? ClockInPlanning.paidOutClockIn,
     });
   }
 
-  onCommentOfficeClick(model: TimeFlexesModel) {
+  onCommentOfficeClick(model: TimeClockInModel) {
     this.ClockinCommentOfficeUpdateModalComponentAfterClosedSub$ = this.dialog
       .open(ClockinCommentOfficeUpdateModalComponent, { ...dialogConfigHelper(this.overlay, model) })
       .afterClosed()
-      .subscribe((x) => (x.result ? this.onFlexPlanningChanged(null, x.model) : undefined));
+      .subscribe((x) => (x.result ? this.onClockInPlanningChanged(null, x.model) : undefined));
   }
 
-  onCommentOfficeAllClick(model: TimeFlexesModel) {
+  onCommentOfficeAllClick(model: TimeClockInModel) {
     this.ClockinCommentOfficeAllUpdateModalComponentAfterClosedSub$ = this.dialog
       .open(ClockinCommentOfficeAllUpdateModalComponent, { ...dialogConfigHelper(this.overlay, model) })
       .afterClosed()
-      .subscribe((x) => (x.result ? this.onFlexPlanningChanged(null, x.model) : undefined));
+      .subscribe((x) => (x.result ? this.onClockInPlanningChanged(null, x.model) : undefined));
   }
 
   ngOnDestroy(): void {}

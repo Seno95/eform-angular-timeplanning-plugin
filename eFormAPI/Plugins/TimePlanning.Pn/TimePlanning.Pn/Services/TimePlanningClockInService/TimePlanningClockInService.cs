@@ -25,7 +25,7 @@ SOFTWARE.
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using TimePlanning.Pn.Infrastructure.Models.Settings;
 
-namespace TimePlanning.Pn.Services.TimePlanningFlexService
+namespace TimePlanning.Pn.Services.TimePlanningClockInService
 {
     using System;
     using System.Collections.Generic;
@@ -41,14 +41,16 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
     using Microting.TimePlanningBase.Infrastructure.Data;
     using Microting.TimePlanningBase.Infrastructure.Data.Entities;
+    using TimePlanning.Pn.Infrastructure.Models.Clockin;
+    using TimePlanning.Pn.Services.TimePlanningFlexService;
     using TimePlanningLocalizationService;
 
     /// <summary>
     /// TimePlanningFlexService
     /// </summary>
-    public class TimePlanningClockInService : ITimePlanningFlexService
+    public class TimePlanningClockInService : ITimePlanningClockInService
     {
-        private readonly ILogger<TimePlanningFlexService> _logger;
+        private readonly ILogger<TimePlanningClockInService> _logger;
         private readonly IPluginDbOptions<TimePlanningBaseSettings> _options;
         private readonly TimePlanningPnDbContext _dbContext;
         private readonly IUserService _userService;
@@ -56,7 +58,7 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
         private readonly IEFormCoreService _core;
 
         public TimePlanningClockInService(
-            ILogger<TimePlanningFlexService> logger,
+            ILogger<TimePlanningClockInService> logger,
             TimePlanningPnDbContext dbContext,
             IUserService userService,
             ITimePlanningLocalizationService localizationService,
@@ -70,7 +72,7 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
             _options = options;
         }
 
-        public async Task<OperationDataResult<List<TimePlanningFlexIndexModel>>> Index()
+        public async Task<OperationDataResult<List<TimePlanningClockInModel>>> Index()
         {
             try
             {
@@ -112,7 +114,7 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
                     }
                 }
 
-                var resultWorkers = new List<TimePlanningFlexIndexModel>();
+                var resultWorkers = new List<TimePlanningClockInIndexModel>();
 
                 foreach (var planRegistration in planRegistrations)
                 {
@@ -123,7 +125,7 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
                         continue;
                     }
 
-                    resultWorkers.Add(new TimePlanningFlexIndexModel
+                    resultWorkers.Add(new TimePlanningClockInIndexModel
                     {
                         SdkSiteId = planRegistration.SdkSitId,
                         Date = planRegistration.Date,
@@ -138,7 +140,7 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
                     });
                 }
 
-                return new OperationDataResult<List<TimePlanningFlexIndexModel>>(
+                return new OperationDataResult<List<TimePlanningClockInIndexModel>>(
                     true,
                     resultWorkers);
             }
@@ -146,13 +148,13 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<List<TimePlanningFlexIndexModel>>(
+                return new OperationDataResult<List<TimePlanningClockInIndexModel>>(
                     false,
                     _localizationService.GetString("ErrorWhileObtainingPlannings"));
             }
         }
 
-        public async Task<OperationResult> UpdateCreate(List<TimePlanningFlexUpdateModel> model)
+        public async Task<OperationResult> UpdateCreate(List<TimePlanningClockInUpdateModel> model)
         {
             try
             {
@@ -228,7 +230,7 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
             }
         }
 
-        private async Task CreatePlanning(TimePlanningFlexUpdateModel model, int sdkSiteId)
+        private async Task CreatePlanning(TimePlanningClockInUpdateModel model, int sdkSiteId)
         {
             var planning = new PlanRegistration
             {
@@ -246,7 +248,7 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
         }
 
         private async Task UpdatePlanning(PlanRegistration planRegistration,
-            TimePlanningFlexUpdateModel model)
+            TimePlanningClockInUpdateModel model)
         {
             planRegistration.CommentOfficeAll = model.CommentOfficeAll;
             planRegistration.CommentOffice = model.CommentOffice;

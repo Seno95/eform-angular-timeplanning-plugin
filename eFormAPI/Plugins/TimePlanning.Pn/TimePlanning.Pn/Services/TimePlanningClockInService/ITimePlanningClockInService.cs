@@ -28,14 +28,15 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
     using Infrastructure.Models.Flex.Index;
     using Infrastructure.Models.Flex.Update;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using TimePlanning.Pn.Infrastructure.Models.Clockin;
 
     /// <summary>
     /// Interface ITimePlanningFlexService
     /// </summary>
     public interface ITimePlanningClockInService
     {
-        Task<OperationDataResult<List<TimePlanningFlexIndexModel>>> Index();
+        Task<OperationDataResult<List<TimePlanningClockInModel>>> Index();
 
-        Task<OperationResult> UpdateCreate(List<TimePlanningFlexUpdateModel> model);
+        Task<OperationResult> UpdateCreate(List<TimePlanningClockInUpdateModel> model);
     }
 }

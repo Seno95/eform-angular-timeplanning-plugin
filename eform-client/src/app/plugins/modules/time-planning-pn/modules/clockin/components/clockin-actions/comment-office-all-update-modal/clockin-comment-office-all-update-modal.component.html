@@ -7,10 +7,10 @@
       <mat-label>{{ 'Comment office all' | translate }}</mat-label>
       <textarea
         matInput
-        [(ngModel)]="timeFlexes.commentOfficeAll"
+        [(ngModel)]="ClockIn.commentOfficeAll"
         type="text"
-        id="timeFlexesCommentOfficeAllInput"
-        name="timeFlexesCommentOfficeAllInput"
+        id="timeClockInCommentOfficeAllInput"
+        name="timeClockInCommentOfficeAllInput"
       ></textarea>
     </mat-form-field>
   </div>
@@ -19,15 +19,15 @@
   <button
     mat-raised-button
     color="accent"
-    (click)="onUpdateFlexPlanning()"
-    id="flexesCommentOfficeAllEditSaveBtn"
+    (click)="onUpdateClockInPlanning()"
+    id="ClockInCommentOfficeAllEditSaveBtn"
   >
     {{'Save' | translate}}
   </button>
   <button
     mat-raised-button
     (click)="hide()"
-    id="flexesCommentOfficeAllEditSaveCancelBtn"
+    id="ClockInCommentOfficeAllEditSaveCancelBtn"
   >
     {{'Cancel' | translate}}
   </button>

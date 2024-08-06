@@ -1,7 +1,7 @@
 <mtx-grid
-  [data]="flexPlannings"
+  [data]="ClockInPlannings"
   [columns]="tableHeaders"
-  [cellTemplate]="{sumFlex: timePlanningSumFlexTpl, commentOffice: commentOfficeTpl}"
+  [cellTemplate]="{sumClockIn: timePlanningSumClockInTpl, commentOffice: commentOfficeTpl}"
   [showPaginator]="false"
   [pageOnFront]="false"
   [rowStriped]="true"
@@ -9,14 +9,14 @@
   [showColumnMenuButton]="false">
 </mtx-grid>
 
-<ng-template #timePlanningSumFlexTpl let-row>
-  <mat-form-field id="timePlanningSumFlex">
+<ng-template #timePlanningSumClockInTpl let-row>
+  <mat-form-field id="timePlanningSumClockIn">
     <input
       matInput
       type="number"
-      id="sumFlex"
+      id="sumClockIn"
       [disabled]="true"
-      [ngModel]="row.sumFlex"
+      [ngModel]="row.sumClockIn"
     />
   </mat-form-field>
 </ng-template>
