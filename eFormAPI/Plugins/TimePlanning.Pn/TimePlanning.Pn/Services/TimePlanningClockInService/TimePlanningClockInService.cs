@@ -45,6 +45,7 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
     using TimePlanning.Pn.Services.TimePlanningFlexService;
     using TimePlanningLocalizationService;
 
+
     /// <summary>
     /// TimePlanningFlexService
     /// </summary>
@@ -72,7 +73,7 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
             _options = options;
         }
 
-        public async Task<OperationDataResult<List<TimePlanningClockInModel>>> Index()
+        public async Task<OperationDataResult<List<TimePlanningClockInIndexModel>>> Index()
         {
             try
             {

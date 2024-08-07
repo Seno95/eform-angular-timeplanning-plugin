@@ -10,7 +10,7 @@ import {
   TimePlanningsUpdateModel,
   TimePlanningUpdateModel,
 } from '../models';
-import { TimeClockInModel } from '../models/clockin/time-clockin.model';
+import { TimeClockInModel, TimeClockInUpdateModel } from '../models/clockin/time-clockin.model';
 
 export let TimePlanningPnPlanningsMethods = {
   Plannings: 'api/time-planning-pn/plannings',
@@ -19,6 +19,8 @@ export let TimePlanningPnPlanningsMethods = {
   WorkingHours: 'api/time-planning-pn/working-hours',
   IndexFlex: 'api/time-planning-pn/flex/index',
   Flex: 'api/time-planning-pn/flex',
+  IndexClockIn: 'api/time-planning-pn/clockin/index',
+  ClockIn: 'api/time-planning-pn/clockin',  
 };
 
 @Injectable({

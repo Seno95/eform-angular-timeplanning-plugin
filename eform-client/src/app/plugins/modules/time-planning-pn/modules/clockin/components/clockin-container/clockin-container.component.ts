@@ -43,7 +43,7 @@ export class ClockInContainerComponent implements OnInit, OnDestroy {
 
   onUpdateClockInPlanning(model: TimeClockInUpdateModel) {
     const indexForUpdate = this.ClockInForUpdate.findIndex(x => x.sdkSiteId === model.sdkSiteId);
-    this.timePlannings[this.timePlannings.findIndex(x => x.sdkSiteId === model.sdkSiteId)] = model as TimeClockInModel;
+    this.timePlannings[this.timePlannings.findIndex(x => x.sdkSiteId === model.sdkSiteId)] = model as unknown as TimeClockInModel;
     if (indexForUpdate === -1) {
       this.ClockInForUpdate.push(model);
     } else {

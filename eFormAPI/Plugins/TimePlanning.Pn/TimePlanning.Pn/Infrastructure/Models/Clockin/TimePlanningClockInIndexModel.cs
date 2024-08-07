@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace TimePlanning.Pn.Infrastructure.Models.Clockin
 {
-    public class TimePlanningClockInUpdateModel
+    public class TimePlanningClockInIndexModel
     {
+        public int SdkSiteId { get; set; }
         public DateTime Date { get; set; }
         public CommonDictionaryModel Worker { get; set; }
-        public double SumFlexStart { get; set; }
-        public double SumFlexEnd { get; set; }
+        public double SumFlex { get; set; }
         public double PaidOutFlex { get; set; }
         public string CommentOffice { get; set; }
-        public string CommentOfficeAll { get; set; }
     }
 }

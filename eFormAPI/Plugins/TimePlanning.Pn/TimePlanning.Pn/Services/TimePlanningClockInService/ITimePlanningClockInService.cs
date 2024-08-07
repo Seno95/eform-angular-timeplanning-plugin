@@ -35,7 +35,7 @@ namespace TimePlanning.Pn.Services.TimePlanningFlexService
     /// </summary>
     public interface ITimePlanningClockInService
     {
-        Task<OperationDataResult<List<TimePlanningClockInModel>>> Index();
+        Task<OperationDataResult<List<TimePlanningClockInIndexModel>>> Index();
 
         Task<OperationResult> UpdateCreate(List<TimePlanningClockInUpdateModel> model);
     }
