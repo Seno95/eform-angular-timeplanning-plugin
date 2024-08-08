@@ -4,13 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
-import { ClockinRouting } from './clockin.routing'; // Ensure this import is correct
-import {
-  ClockinCommentOfficeAllUpdateModalComponent,
-  ClockinCommentOfficeUpdateModalComponent,
-  ClockinContainerComponent,
-  ClockinTableComponent,
-} from './components'; // Ensure these imports are correct
+import { ClockinRouting } from './clockin.routing';
+import { ClockInContainerComponent, ClockinTableComponent } from './components';
 import { MtxGridModule } from '@ng-matero/extensions/grid';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -37,11 +32,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
   ],
   declarations: [
-    ClockinCommentOfficeAllUpdateModalComponent,
-    ClockinCommentOfficeUpdateModalComponent,
-    ClockinContainerComponent,
+    ClockInContainerComponent,
     ClockinTableComponent,
   ],
   providers: [],
 })
 export class ClockinModule {}
+

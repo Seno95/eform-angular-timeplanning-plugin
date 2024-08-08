@@ -1,2 +1,2 @@
-export * from './time-ClockIn.model';         
-export * from './time-ClockIn-update.model';  
+export * from './time-clockin.model';
+export * from './time-clockin-update.model';

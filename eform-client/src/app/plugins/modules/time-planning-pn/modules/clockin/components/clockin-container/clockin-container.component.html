@@ -16,7 +16,7 @@
   >{{ 'Save' | translate }}</button>
 </eform-new-subheader>
 
-<app-time-ClockIn-table
+<app-clockin-table  
   [ClockInPlannings]="timePlannings"
   (ClockInPlanningChanged)="onUpdateClockInPlanning($event)"
-></app-time-ClockIn-table>
+></app-clockin-table>

@@ -2,19 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
 import { SiteDto } from 'src/app/common/models';
-import {
-  TimeClockInModel,
-  TimeClockInUpdateModel,
-} from '../../../../models/clockin';
-import {   TimePlanningsRequestModel } from '../../../../models/';
-
+import { TimeClockInModel, TimeClockInUpdateModel } from '../../../../models/clockin';
+import { TimePlanningsRequestModel } from '../../../../models/';
 import { TimePlanningPnPlanningsService } from '../../../../services';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-ClockIn-container', 
-  templateUrl: './clockIn-container.component.html', 
-  styleUrls: ['./clockIn-container.component.scss'], 
+  selector: 'app-clockin-container', // Ensure this is correct
+  templateUrl: './clockin-container.component.html', // Ensure this is correct
+  styleUrls: ['./clockin-container.component.scss'], // Ensure this is correct
 })
 export class ClockInContainerComponent implements OnInit, OnDestroy { 
   timePlanningsRequest: TimePlanningsRequestModel;
@@ -61,10 +57,11 @@ export class ClockInContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  resetFlexPlanning() {
+  resetClockInPlanning() {
     this.ClockInForUpdate = [];
     this.getClockIns();
   }
 
   ngOnDestroy(): void {}
 }
+

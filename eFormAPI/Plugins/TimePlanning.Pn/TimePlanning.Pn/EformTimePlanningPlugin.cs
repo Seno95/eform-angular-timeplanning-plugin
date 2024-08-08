@@ -62,6 +62,7 @@ namespace TimePlanning.Pn
     using Services.TimePlanningLocalizationService;
     using Services.TimePlanningPlanningService;
     using Services.TimePlanningWorkingHoursService;
+    using TimePlanning.Pn.Services.TimePlanningClockInService;
 
     public class EformTimePlanningPlugin : IEformPlugin
     {
@@ -85,6 +86,7 @@ namespace TimePlanning.Pn
             services.AddTransient<ITimePlanningWorkingHoursService, TimePlanningWorkingHoursService>();
             services.AddTransient<ITimePlanningFlexService, TimePlanningFlexService>();
             services.AddTransient<ITimePlanningRegistrationDeviceService, TimePlanningRegistrationDeviceService>();
+            services.AddTransient<ITimePlanningClockInService, TimePlanningClockInService>();
             services.AddTransient<ISettingService, TimeSettingService>();
             services.AddControllers();
             SeedEForms(services);
@@ -608,6 +610,65 @@ namespace TimePlanning.Pn
                                         Language = LanguageNames.Danish
                                     }
                                 }
+                                
+                            },
+                            new()
+                            {
+                                Name = "ClockIn",
+                                E2EId = "time-planning-pn-clockin",
+                                Link = "/plugins/time-planning-pn/clockin",
+                                Type = MenuItemTypeEnum.Link,
+                                Position = 4,
+                                MenuTemplate = new PluginMenuTemplateModel
+                                {
+                                    Name = "ClockIn",
+                                    E2EId = "time-planning-pn-clockin",
+                                    DefaultLink = "/plugins/time-planning-pn/clockin",
+                                    Permissions = new List<PluginMenuTemplatePermissionModel>(),
+                                    Translations = new List<PluginMenuTranslationModel>
+                                    {
+                                        new()
+                                        { 
+                                        LocaleName = LocaleNames.English,
+                                        Name = "ClockIn",
+                                        Language = LanguageNames.English
+                                        },
+                                        new()
+                                        {
+                                        LocaleName = LocaleNames.German,
+                                        Name = "ClockIn",
+                                        Language = LanguageNames.German
+                                        },
+                                        new()
+                                        {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name = "ClockIn",
+                                        Language = LanguageNames.Danish
+                                        }
+                                    }
+                                },
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.English,
+                                        Name = "ClockIn",
+                                        Language = LanguageNames.English
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.German,
+                                        Name = "ClockIn",
+                                        Language = LanguageNames.German
+                                    },
+                                    new()
+                                    {
+                                        LocaleName = LocaleNames.Danish,
+                                        Name = "ClockIn",
+                                        Language = LanguageNames.Danish
+                                    }
+                                }
+
                             }
                         }
                     }
@@ -653,6 +714,14 @@ namespace TimePlanning.Pn
                         Link = "/plugins/time-planning-pn/flex",
                         Position = 2,
                         Guards = new List<string> { TimePlanningClaims.GetFlex }
+                    },
+                    new() 
+                    {
+                        Name = localizationService.GetString("ClockIn"),
+                        E2EId = "time-planning-pn-clockin",
+                        Link = "/plugins/time-planning-pn/clockin",
+                        Position = 3,
+                        Guards = new List<string> { TimePlanningClaims.AccessTimePlanningPlugin }
                     }
                 }
             });

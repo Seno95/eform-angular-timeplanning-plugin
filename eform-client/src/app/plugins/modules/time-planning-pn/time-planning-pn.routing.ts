@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard, PermissionGuard } from 'src/app/common/guards';
 import { TimePlanningPnClaims } from './enums';
 import { TimePlanningPnLayoutComponent } from './layouts';
+import { ClockInContainerComponent } from './modules/clockin/components/clockin-container/clockin-container.component';
+
 
 export const routes: Routes = [
   {
@@ -44,6 +46,13 @@ export const routes: Routes = [
           import('./modules/registration-devices/registration-devices.module').then(
             (m) => m.RegistrationDevicesModule
           ),
+      },
+      {
+        path: 'clockin',
+        component: ClockInContainerComponent, 
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./modules/clockin/clockin.module').then((m) => m.ClockinModule),
       },
     ],
   },

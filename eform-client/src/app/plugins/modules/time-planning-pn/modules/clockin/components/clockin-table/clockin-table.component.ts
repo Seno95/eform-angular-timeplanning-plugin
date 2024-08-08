@@ -6,11 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { TimeFlexesModel } from '../../../../models';
-import {
-  ClockinCommentOfficeAllUpdateModalComponent,
-  ClockinCommentOfficeUpdateModalComponent,
-} from '..';
+import { TimeClockInModel } from '../../../../models/clockin/time-clockin.model';
 import { TranslateService } from '@ngx-translate/core';
 import { MtxGridColumn } from '@ng-matero/extensions/grid';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,7 +14,6 @@ import { Overlay } from '@angular/cdk/overlay';
 import { dialogConfigHelper } from 'src/app/common/helpers';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { TimeClockInModel } from '../../../../models/clockin/time-clockin.model';
 
 @AutoUnsubscribe()
 @Component({
@@ -30,7 +25,6 @@ export class ClockinTableComponent implements OnInit, OnDestroy {
   @Input() ClockInPlannings: TimeClockInModel[] = [];
   @Output()
   ClockInPlanningChanged: EventEmitter<TimeClockInModel> = new EventEmitter<TimeClockInModel>();
-  editCommentOfficeModal: ClockinCommentOfficeUpdateModalComponent;
 
   tableHeaders: MtxGridColumn[] = [
     { header: this.translateService.stream('Date'), field: 'date', type: 'date', typeParameter: { format: 'dd.MM.yyyy' } },
@@ -42,9 +36,6 @@ export class ClockinTableComponent implements OnInit, OnDestroy {
     { header: this.translateService.stream('SumClockIn'), field: 'sumClockIn' },
     { header: this.translateService.stream('Comment office'), field: 'commentOffice' },
   ];
-
-  ClockinCommentOfficeUpdateModalComponentAfterClosedSub$: Subscription;
-  ClockinCommentOfficeAllUpdateModalComponentAfterClosedSub$: Subscription;
 
   constructor(
     private translateService: TranslateService,
@@ -61,20 +52,7 @@ export class ClockinTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  onCommentOfficeClick(model: TimeClockInModel) {
-    this.ClockinCommentOfficeUpdateModalComponentAfterClosedSub$ = this.dialog
-      .open(ClockinCommentOfficeUpdateModalComponent, { ...dialogConfigHelper(this.overlay, model) })
-      .afterClosed()
-      .subscribe((x) => (x.result ? this.onClockInPlanningChanged(null, x.model) : undefined));
-  }
-
-  onCommentOfficeAllClick(model: TimeClockInModel) {
-    this.ClockinCommentOfficeAllUpdateModalComponentAfterClosedSub$ = this.dialog
-      .open(ClockinCommentOfficeAllUpdateModalComponent, { ...dialogConfigHelper(this.overlay, model) })
-      .afterClosed()
-      .subscribe((x) => (x.result ? this.onClockInPlanningChanged(null, x.model) : undefined));
-  }
-
   ngOnDestroy(): void {}
 }
+
 

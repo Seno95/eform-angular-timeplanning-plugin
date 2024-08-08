@@ -10,7 +10,7 @@ import {
   TimePlanningsUpdateModel,
   TimePlanningUpdateModel,
 } from '../models';
-import { TimeClockInModel, TimeClockInUpdateModel } from '../models/clockin/time-clockin.model';
+import { TimeClockInModel, TimeClockInUpdateModel } from '../models/clockin';
 
 export let TimePlanningPnPlanningsMethods = {
   Plannings: 'api/time-planning-pn/plannings',
@@ -77,5 +77,5 @@ export class TimePlanningPnPlanningsService {
 
   updateClockIn(model: TimeClockInUpdateModel[]): Observable<OperationResult> {
     return this.apiBaseService.put(TimePlanningPnPlanningsMethods.ClockIn, model);
-}
+  }
 }
