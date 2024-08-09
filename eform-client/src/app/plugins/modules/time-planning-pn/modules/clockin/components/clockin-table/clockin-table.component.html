@@ -1,7 +1,12 @@
-<mtx-grid
+<mtx-grid *ngIf="ClockInPlannings?.length > 0"
   [data]="ClockInPlannings"
   [columns]="tableHeaders"
-  [cellTemplate]="{sumClockIn: timePlanningSumClockInTpl, commentOffice: commentOfficeTpl}"
+  [cellTemplate]="{
+    date: timePlanningClockInDateTpl,
+    worker: timePlanningClockInWorkerTpl,
+    clockInTime: timePlanningClockInTimeTpl,
+    isActive: timePlanningActiveStatusTpl
+  }"
   [showPaginator]="false"
   [pageOnFront]="false"
   [rowStriped]="true"
@@ -9,26 +14,49 @@
   [showColumnMenuButton]="false">
 </mtx-grid>
 
-<ng-template #timePlanningSumClockInTpl let-row>
-  <mat-form-field id="timePlanningSumClockIn">
+<!-- <div *ngIf="ClockInPlannings?.length === 0">
+  No data available.
+</div>
+-->
+
+<ng-template #timePlanningClockInDateTpl let-row>
+  <mat-form-field id="timePlanningClockInDate">
     <input
       matInput
-      type="number"
-      id="sumClockIn"
+      type="text"
+      id="clockInDate"
       [disabled]="true"
-      [ngModel]="row.sumClockIn"
+      [ngModel]="row.date | date: 'dd.MM.yyyy'"
     />
   </mat-form-field>
 </ng-template>
 
-<ng-template #commentOfficeTpl let-row>
-  <mat-form-field id="timePlanningCommentOffice" (click)="onCommentOfficeClick(row)">
+<ng-template #timePlanningClockInWorkerTpl let-row>
+  <mat-form-field id="timePlanningClockInWorker">
     <input
       matInput
       type="text"
-      id="commentOffice"
+      id="clockInWorker"
       [disabled]="true"
-      [ngModel]="row.commentOffice.slice(0, 20) + '...'"
-    >
+      [ngModel]="row.worker?.name || 'Unknown'"
+    />
+  </mat-form-field>
+</ng-template>
+
+<ng-template #timePlanningClockInTimeTpl let-row>
+  <mat-form-field id="timePlanningClockInTime">
+    <input
+      matInput
+      type="text"
+      id="clockInTime"
+      [disabled]="true"
+      [ngModel]="row.clockInTime | date: 'shortTime'"
+    />
+  </mat-form-field>
+</ng-template>
+
+<ng-template #timePlanningActiveStatusTpl let-row>
+  <mat-form-field id="timePlanningActiveStatus">
+    <span *ngIf="row.isActive" class="active-indicator"></span>
   </mat-form-field>
 </ng-template>

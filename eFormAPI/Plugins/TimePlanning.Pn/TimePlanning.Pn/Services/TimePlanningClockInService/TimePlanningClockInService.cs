@@ -235,8 +235,7 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
         {
             var planning = new PlanRegistration
             {
-                CommentOffice = model.CommentOffice,
-                CommentOfficeAll = model.CommentOfficeAll,
+
                 SdkSitId = sdkSiteId,
                 Date = model.Date,
                 SumFlexEnd = model.SumFlexStart - model.PaidOutFlex,
@@ -251,8 +250,7 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
         private async Task UpdatePlanning(PlanRegistration planRegistration,
             TimePlanningClockInUpdateModel model)
         {
-            planRegistration.CommentOfficeAll = model.CommentOfficeAll;
-            planRegistration.CommentOffice = model.CommentOffice;
+
             planRegistration.SumFlexEnd += planRegistration.PaiedOutFlex - model.PaidOutFlex;
             planRegistration.PaiedOutFlex = model.PaidOutFlex;
             planRegistration.UpdatedByUserId = _userService.UserId;

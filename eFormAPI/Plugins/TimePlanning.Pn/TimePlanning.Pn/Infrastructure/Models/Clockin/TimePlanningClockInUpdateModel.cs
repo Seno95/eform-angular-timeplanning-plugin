@@ -14,7 +14,6 @@ namespace TimePlanning.Pn.Infrastructure.Models.Clockin
         public double SumFlexStart { get; set; }
         public double SumFlexEnd { get; set; }
         public double PaidOutFlex { get; set; }
-        public string CommentOffice { get; set; }
-        public string CommentOfficeAll { get; set; }
+
     }
 }

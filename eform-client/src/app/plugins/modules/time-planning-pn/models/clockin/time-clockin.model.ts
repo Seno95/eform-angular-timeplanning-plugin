@@ -4,10 +4,8 @@ export class TimeClockInModel {
   sdkSiteId: number;
   worker: CommonDictionaryModel = new CommonDictionaryModel();
   date: string;
-  clockInHours: number;
+  clockInTime: number; 
   sumClockIn: number;
   paidOutClockIn: number;
-  commentWorker: string;
-  commentOffice: string;
-  commentOfficeAll: string;
+  isActive: boolean; 
 }
