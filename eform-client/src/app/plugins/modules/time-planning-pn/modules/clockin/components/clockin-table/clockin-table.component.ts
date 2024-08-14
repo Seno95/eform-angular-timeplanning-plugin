@@ -5,6 +5,8 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
+  TemplateRef,
 } from '@angular/core';
 import { TimeClockInModel } from '../../../../models/clockin/time-clockin.model';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,8 +25,12 @@ import { TimePlanningPnPlanningsService } from '../../../../services/time-planni
 })
 export class ClockinTableComponent implements OnInit, OnDestroy {
   @Input() ClockInPlannings: TimeClockInModel[] = [];
-  @Output()
-  ClockInPlanningChanged: EventEmitter<TimeClockInModel> = new EventEmitter<TimeClockInModel>();
+  @Output() ClockInPlanningChanged: EventEmitter<TimeClockInModel> = new EventEmitter<TimeClockInModel>();
+
+  @ViewChild('timePlanningClockInDateTpl', { static: true }) timePlanningClockInDateTpl!: TemplateRef<any>;
+  @ViewChild('timePlanningClockInWorkerTpl', { static: true }) timePlanningClockInWorkerTpl!: TemplateRef<any>;
+  @ViewChild('timePlanningClockInTimeTpl', { static: true }) timePlanningClockInTimeTpl!: TemplateRef<any>;
+  @ViewChild('timePlanningActiveStatusTpl', { static: true }) timePlanningActiveStatusTpl!: TemplateRef<any>;
 
   tableHeaders: MtxGridColumn[] = [];
 
@@ -36,16 +42,21 @@ export class ClockinTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.initializeTableHeaders();
     this.timePlanningPnPlanningsService.getClockIn().subscribe(
       (response) => {
         if (response && response.success) {
-          this.ClockInPlannings = response.model;
+          this.ClockInPlannings = response.model.map(item => {
+            if (item.clockInTime) {
+              item.clockInTime = new Date(item.clockInTime);
+            }
+            return item;
+          });
+          console.log(this.ClockInPlannings);
         } else {
           console.error('Failed to fetch clock-in data', response.message);
           this.ClockInPlannings = [];
         }
-
-        this.initializeTableHeaders();
       },
       (error) => {
         console.error('Error fetching clock-in data', error);
@@ -53,34 +64,31 @@ export class ClockinTableComponent implements OnInit, OnDestroy {
       }
     );
   }
+  
 
   initializeTableHeaders(): void {
     this.tableHeaders = [
       {
         header: this.translateService.stream('Date'),
         field: 'date',
-        type: 'date',
-        typeParameter: { format: 'dd.MM.yyyy' }
+        cellTemplate: this.timePlanningClockInDateTpl,
       },
       {
         header: this.translateService.stream('Worker'),
         field: 'worker',
-        formatter: (row: TimeClockInModel) => row.worker ? row.worker.name : 'Unknown',
+        cellTemplate: this.timePlanningClockInWorkerTpl,
       },
       {
         header: this.translateService.stream('Clock In Time'),
         field: 'clockInTime',
-        formatter: (row: TimeClockInModel) => {
-          const date = new Date(row.clockInTime);
-          return isNaN(date.getTime()) ? '' : date.toLocaleTimeString();
-        },
+        cellTemplate: this.timePlanningClockInTimeTpl,
       },
       {
         header: this.translateService.stream('Active Status'),
         field: 'isActive',
-        formatter: (row: TimeClockInModel) => row.isActive ? '<span class="active-indicator" style="color:green">●</span>' : '',
+        cellTemplate: this.timePlanningActiveStatusTpl,
       },
-    ];    
+    ];
   }
 
   onClockInPlanningChanged(
@@ -95,7 +103,3 @@ export class ClockinTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 }
-
-
-
-

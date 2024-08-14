@@ -15,5 +15,8 @@ namespace TimePlanning.Pn.Infrastructure.Models.Clockin
         public double SumFlex { get; set; }
         public double PaidOutFlex { get; set; }
         public string CommentOffice { get; set; }
+        public bool IsActive { get; set; }      
+        public DateTime? ClockInTime { get; set; } 
     }
 }
+

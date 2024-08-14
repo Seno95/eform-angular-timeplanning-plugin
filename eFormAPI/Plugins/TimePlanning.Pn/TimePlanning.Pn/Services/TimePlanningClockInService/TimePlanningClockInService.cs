@@ -80,6 +80,7 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
                 var core = await _core.GetCore();
                 await using var sdkDbContext = core.DbContextHelper.GetDbContext();
 
+                // Get distinct site IDs from plan registrations
                 var listSiteIds = await _dbContext.PlanRegistrations
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Select(x => x.SdkSitId).Distinct().ToListAsync();
@@ -88,6 +89,19 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
 
                 foreach (var listSiteId in listSiteIds)
                 {
+                    // Check for active registrations for today
+                    var todayRegistration = await _dbContext.PlanRegistrations
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Where(x => x.Date == DateTime.Now.Date && x.SdkSitId == listSiteId && x.Start1Id != 0)
+                        .FirstOrDefaultAsync();
+
+                    if (todayRegistration != null)
+                    {
+                        planRegistrations.Add(todayRegistration);
+                        continue;
+                    }
+
+                    // If no active registration today, fetch the latest registration before today
                     var r = await _dbContext.PlanRegistrations
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Where(x => x.Date < DateTime.Now.Date)
@@ -119,12 +133,14 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
 
                 foreach (var planRegistration in planRegistrations)
                 {
-
                     var site = await sdkDbContext.Sites.SingleOrDefaultAsync(x => x.MicrotingUid == planRegistration.SdkSitId && x.WorkflowState != Constants.WorkflowStates.Removed);
                     if (site == null)
                     {
                         continue;
                     }
+
+                    bool isActive = IsWorkerActive(planRegistration);
+                    DateTime? clockInTime = GetClockInTime(planRegistration);
 
                     resultWorkers.Add(new TimePlanningClockInIndexModel
                     {
@@ -137,7 +153,9 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
                         },
                         SumFlex = Math.Round(planRegistration.SumFlexEnd, 2),
                         PaidOutFlex = planRegistration.PaiedOutFlex,
-                        CommentOffice = planRegistration.CommentOffice?.Replace("\r", "<br />") ?? ""
+                        CommentOffice = planRegistration.CommentOffice?.Replace("\r", "<br />") ?? "",
+                        IsActive = isActive,
+                        ClockInTime = clockInTime
                     });
                 }
 
@@ -154,6 +172,31 @@ namespace TimePlanning.Pn.Services.TimePlanningClockInService
                     _localizationService.GetString("ErrorWhileObtainingPlannings"));
             }
         }
+
+        private bool IsWorkerActive(PlanRegistration planRegistration)
+        {
+            return planRegistration.Date >= DateTime.Now.AddDays(-1).Date &&
+                   planRegistration.Start1Id != 0 &&
+                   (planRegistration.Stop1Id == 0 || planRegistration.Stop1Id == null);
+        }
+
+
+        private DateTime? GetClockInTime(PlanRegistration planRegistration)
+        {
+            if (planRegistration.Start1StartedAt.HasValue)
+            {
+                return planRegistration.Start1StartedAt;
+            }
+            else if (planRegistration.Start1Id != 0)
+            {
+                return planRegistration.Date.AddMinutes(5 * planRegistration.Start1Id);
+            }
+
+            return null;
+        }
+
+
+
 
         public async Task<OperationResult> UpdateCreate(List<TimePlanningClockInUpdateModel> model)
         {
