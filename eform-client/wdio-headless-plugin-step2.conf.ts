@@ -1,5 +1,5 @@
 //const path = require("path");
-import type { Options } from '@wdio/types'
+import type { Options } from '@wdio/types';
 import { $ } from '@wdio/globals';
 
 export const config: Options.Testrunner = {
@@ -193,7 +193,7 @@ export const config: Options.Testrunner = {
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
   before: function () {
-    // browser.timeouts('implicit', 5000);
+    //browser.timeouts('implicit', 5000);
   },
   /**
    * Runs before a WebdriverIO command gets executed.
