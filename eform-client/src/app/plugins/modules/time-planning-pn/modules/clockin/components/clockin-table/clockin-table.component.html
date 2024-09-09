@@ -14,43 +14,18 @@
 </div>
 
 <ng-template #timePlanningClockInDateTpl let-row>
-  <mat-form-field appearance="fill">
-    <input
-      matInput
-      type="text"
-      [ngModel]="row.date | date: 'dd.MM.yyyy'"
-      disabled
-    />
-  </mat-form-field>
+  <span>{{ row.date | date: 'dd.MM.yyyy' }}</span>
 </ng-template>
 
 <ng-template #timePlanningClockInWorkerTpl let-row>
-  <mat-form-field>
-    <input
-      matInput
-      type="text"
-      [disabled]="true"
-      [ngModel]="row.worker?.name || 'Unknown'"
-    />
-  </mat-form-field>
+  <span>{{ row.worker?.name || 'Unknown' }}</span>
 </ng-template>
 
 <ng-template #timePlanningClockInTimeTpl let-row>
-  <mat-form-field appearance="fill">
-    <input
-      matInput
-      type="text"
-      [ngModel]="row.clockInTime | date:'HH:mm:ss'"
-      disabled
-    />
-  </mat-form-field>
+  <span>{{ row.clockInTime | date: 'HH:mm:ss' }}</span>
 </ng-template>
-
-
-
 
 <ng-template #timePlanningActiveStatusTpl let-row>
-  <span *ngIf="row.isActive" class="active-indicator" style="color:green">●</span>
-  <span *ngIf="!row.isActive" class="inactive-indicator" style="color:red">●</span>
+  <span *ngIf="row.isActive" class="active-indicator" style="color:green">● Active</span>
+  <span *ngIf="!row.isActive" class="inactive-indicator" style="color:red">● Inactive</span>
 </ng-template>
-

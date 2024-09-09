@@ -10,15 +10,7 @@
 </mtx-grid>
 
 <ng-template #timePlanningSumFlexTpl let-row>
-  <mat-form-field id="timePlanningSumFlex">
-    <input
-      matInput
-      type="number"
-      id="sumFlex"
-      [disabled]="true"
-      [ngModel]="row.sumFlex"
-    />
-  </mat-form-field>
+  <span id="timePlanningSumFlex">{{ row.sumFlex }}</span>
 </ng-template>
 
 <ng-template #commentOfficeTpl let-row>
