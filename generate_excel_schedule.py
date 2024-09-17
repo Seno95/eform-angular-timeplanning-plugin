@@ -6,7 +6,7 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font
 
 # Get the current directory where the script is located
-currentdir = os.path.dirname(os.path.abspath(__file))
+currentdir = os.path.dirname(os.path.abspath(__file__))
 
 # list for the dates
 start_date = datetime.today()
