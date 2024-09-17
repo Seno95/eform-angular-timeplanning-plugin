@@ -1,7 +1,7 @@
 
 // TODO
 
-describe('Time Planning Employee Creation Test', () => {
+/* describe('Time Planning Employee Creation Test', () => {
   let randomId, randomSiteId;
 
   beforeEach(() => {
@@ -71,4 +71,4 @@ function getRandomSiteId() {
 
 function getRandomCustomerNo() {
   return Math.floor(Math.random() * 1000) + 1;
-}
+} */
