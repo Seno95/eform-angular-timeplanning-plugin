@@ -64,8 +64,6 @@ jobs:
     - name: Run Python script
       run: |
         python generate_excel_schedule.py
-
-      with:
         path: eform-angular-timeplanning-plugin
     - name: Extract branch name
       id: extract_branch
