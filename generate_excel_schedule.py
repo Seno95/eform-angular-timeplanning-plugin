@@ -5,6 +5,9 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font
 
+# Get the current directory where the script is located
+currentdir = os.path.dirname(os.path.abspath(__file))
+
 # list for the dates
 start_date = datetime.today()
 dates = [start_date + timedelta(days=i) for i in range(10)]
@@ -43,7 +46,7 @@ data = {
 df = pd.DataFrame(data)
 
 # output directory and filename
-output_dir = 'eform-client/cypress/fixtures/'
+output_dir = os.path.join(current_dir, 'eform-client/cypress/fixtures/')
 output_file = 'output_schedule.xlsx'
 
 # Check if directory exist
