@@ -46,7 +46,7 @@ data = {
 df = pd.DataFrame(data)
 
 # output directory and filename
-output_dir = os.path.join(current_dir, 'eform-client/cypress/fixtures/')
+output_dir = os.path.join(currentdir, 'eform-client/cypress/fixtures/')
 output_file = 'output_schedule.xlsx'
 
 # Check if directory exist
