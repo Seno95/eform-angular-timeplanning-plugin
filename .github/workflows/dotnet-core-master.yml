@@ -51,16 +51,15 @@ jobs:
         test: [a]
     steps:
     - uses: actions/checkout@v3
-
+      with:
+        path: eform-angular-timeplanning-plugin
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-
     - name: Install dependencies
       run: |
         pip install pandas openpyxl
-
     - name: Run Python script
       run: |
         python generate_excel_schedule.py
