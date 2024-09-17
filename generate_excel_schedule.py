@@ -43,7 +43,7 @@ data = {
 df = pd.DataFrame(data)
 
 # output directory and filename
-output_dir = 'eform-angular-timeplanning-plugin/eform-client/cypress/fixtures/'
+output_dir = 'eform-client/cypress/fixtures/'
 output_file = 'output_schedule.xlsx'
 
 # Check if directory exist
